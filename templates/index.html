@@ -1,0 +1,94 @@
+<!Doctype HTML>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/func.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <title>Usage Stats Visualizer</title>
+</head>
+
+<body>
+    <h1>Smogon Usage Stats Visualizer</h1>
+    <div class="col-xs-5 data-select">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>
+                        <a data-toggle="collapse" href="#specifications" onclick="unshow();">
+                            Specifications
+                        </a>
+                    </h4>
+                </div>
+                <div id="specifications" class="show select-panel panel-collapse collapse">
+                    <label for="sel_gen">Select Gen:</label>
+                    <select class="form-control" id="sel_gen">
+                            <option>Gen1</option>
+                            <option>Gen2</option>
+                            <option>Gen3</option>
+                            <option>Gen4</option>
+                            <option>Gen5</option>
+                            <option>Gen6</option>
+                            <option>Gen7</option>
+                        </select>
+                    <label for="sel_tier">Select Tier:</label>
+                    <select class="form-control" id="sel_tier">
+                            <option>OU</option>
+                            <option>UU</option>
+                            <option>RU</option>
+                            <option>NU</option>
+                            <option>PU</option>
+                            <option>LC</option>
+                            <option>Ubers</option>
+                        </select>
+                    <label for="sel_level">Select Level:</label>
+                    <select class="form-control" id="sel_level">
+                            <option>0</option>
+                            <option>1500</option>
+                            <option>1630</option>
+                            <option>1760</option>
+                        </select>
+                    <label for="sel_start_month">Starting Month</label>
+                    <select class="form-control" id="sel_start_month">
+                    </select>
+                    <label for="sel_end_month">Ending Month</label>
+                    <select class="form-control" id="sel_end_month">
+                    </select>
+                    <div class="input-checkboxes">
+                        <input type="checkbox" id="suspect_checkbox" /> Ignore Suspects<br />
+                    </div>
+                    <div class="input-checkboxes">
+                        <input type="checkbox" id="alpha_checkbox" /> Ignore Alpha/Beta<br />
+                    </div>
+                    <div class="btn btn-primary submit-button" onclick="get_data()">Get Data</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>
+                            <a data-toggle="collapse" href="#pokemon_select">
+                                Select Pokemon
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="pokemon_select" class="select-panel panel-collapse collapse">
+                        Submit Tier Specifications first!
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+    <div id="datadiv" class="col-xs-7 data-display">
+        [graph goes here]
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+.data-select {
+    _background-color: red;
+    padding: 15px;
+    max-width: 500px;
+}
+.data-display {
+    max-width: 5000px;
+}
+.select-panel {
+    padding: 15px;
+    padding-top: 0;
+}
+label {
+    margin-top: 15px;
+}
+
+input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.input-checkboxes {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+h4 a, h4 a:link, h4 a:visited, h4 a:hover, h4 a:focus, h4 a:active {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+h1 {
+    padding-left: 15px;
+}
+
+#datadiv {
+    padding: 15px;
+}
+
+.mon_list {
+    margin-top: 15px;
+}
