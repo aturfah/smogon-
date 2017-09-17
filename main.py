@@ -2,9 +2,10 @@ import json
 import os
 from re import sub
 from urllib.request import urlopen 
+from urllib.error import HTTPError
 
 from flask import Flask, render_template, request, jsonify
-from api import *
+from api_helpers import *
 
 app = Flask(__name__)
 
@@ -48,13 +49,15 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
     filename_alpha = gen + tier + "alpha-" + level
     filename_beta = gen + tier + "beta-" + level
 
-    if suspect_flag and filename_suspect in raw_html:
+    if suspect_flag and '"' + filename_suspect in raw_html:
+        print(raw_html)
+        print("Suspect {}".format(filename_suspect))
         return filename_suspect
     elif '"' + filename in raw_html:
         return filename
-    elif alpha_flag and filename_alpha in raw_html:
+    elif alpha_flag and '"' + filename_alpha in raw_html:
         return filename_alpha
-    elif alpha_flag and filename_beta in raw_html:
+    elif alpha_flag and '"' + filename_beta in raw_html:
         return filename_beta
     elif gen == "gen6":
         return file_in_month(month_url, "", tier, level, alpha_flag, suspect_flag)
@@ -62,9 +65,13 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
         return None
 
 def parse_data(file_url):
-    txt_data = urlopen(file_url).read().decode()
     file_data = {}
-
+    try:
+        txt_data = urlopen(file_url).read().decode()
+    except HTTPError as exc:
+        print(exc, file_url)
+        exit(1)
+        
     data_arr = txt_data.split("\n")
     #Remove the header rows/not relevant rows
     to_delete = [0, 1]
