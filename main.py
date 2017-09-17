@@ -50,8 +50,6 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
     filename_beta = gen + tier + "beta-" + level
 
     if suspect_flag and '"' + filename_suspect in raw_html:
-        print(raw_html)
-        print("Suspect {}".format(filename_suspect))
         return filename_suspect
     elif '"' + filename in raw_html:
         return filename
@@ -66,12 +64,8 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
 
 def parse_data(file_url):
     file_data = {}
-    try:
-        txt_data = urlopen(file_url).read().decode()
-    except HTTPError as exc:
-        print(exc, file_url)
-        exit(1)
-        
+    txt_data = urlopen(file_url).read().decode()
+    
     data_arr = txt_data.split("\n")
     #Remove the header rows/not relevant rows
     to_delete = [0, 1]
