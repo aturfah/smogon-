@@ -2,7 +2,6 @@ import json
 import os
 from re import sub
 from urllib.request import urlopen 
-from urllib.error import HTTPError
 
 from flask import Flask, render_template, request, jsonify
 from api_helpers import *
