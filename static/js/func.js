@@ -245,7 +245,6 @@ function display_graph(mon_data) {
         }
 
         chart_data['datasets'].push(dataset)
-        //    console.log(mon_data['pokemon'][pokemon_name]['usage'])
     }
     title_str = title_str.slice(0, -2) + " from " + chart_data['labels'][0] + " to " + chart_data['labels'][chart_data['labels'].length - 1]
 
