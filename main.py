@@ -32,9 +32,7 @@ def get_data():
             file_url = month_url + "/" + file_name + ".txt"
             print(file_url)
             pokemon_data[month_name] = parse_data(file_url)
-        else:
-            print("Filename not found")
-
+        
     return jsonify(pokemon_data)
 
 if __name__ == "__main__":
