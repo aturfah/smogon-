@@ -55,8 +55,8 @@ color_wheel = [
 
 $(document).ready(function () {
     load_months()
-}
-)
+})
+
 function load_months() {
     start_html_str = "<option>(From Start)</option>"
     end_html_str = "<option>(To End)</option>"
@@ -67,6 +67,7 @@ function load_months() {
     $("#sel_start_month").html(start_html_str)
     $("#sel_end_month").html(end_html_str)
 }
+
 function load_list() {
     html_str = ""
     for (var i = 1; i < 4; ++i) {
@@ -83,6 +84,7 @@ function load_list() {
         <div class=\"btn btn-primary submit-button\" onclick=\"graph_data()\">Graph</div>"
     $("#pokemon_select").html(html_str)
 }
+
 function get_data() {
     usage_data = {}
     pokemon_set.clear()
@@ -90,7 +92,7 @@ function get_data() {
     $('#pokemon_select').collapse({
         toggle: true
     });
-    $("#pokemon_select").html("Loading...")
+    $("#pokemon_select").html("<img src=\"http://alvarodias.org/images/articles/LoadingIndicators-hourglass.gif\" style=\"width:40px;margin:auto;display:block;\" alt=\"Loading...\"/>")
 
     var base_url = "http://www.smogon.com/stats/"
     var gen = document.getElementById("sel_gen").value.toLowerCase();
@@ -99,7 +101,7 @@ function get_data() {
     var alpha_beta = !$('#alpha_checkbox').is(":checked");
     var suspect = !$('#suspect_checkbox').is(":checked");
 
-    if (tier == "ou" && (gen == "gen6" || gen == "gen7")){
+    if (tier == "ou" && (gen == "gen6" || gen == "gen7")) {
         level = ou_mapping[level]
     }
 
@@ -152,20 +154,20 @@ function get_data() {
 
     $.ajax({
         'type': "POST",
-        'url': "/api/get_data/", 
+        'url': "/api/get_data/",
         'data': request_data,
-        'dataType' :"json",
-        'success': function(data){
+        'dataType': "json",
+        'success': function (data) {
             usage_data = data
-            for(month in usage_data){
-                for(pokemon in usage_data[month]){
+            for (month in usage_data) {
+                for (pokemon in usage_data[month]) {
                     pokemon_set.add(pokemon)
                 }
             }
             load_list()
         }
     });
-    
+
     return;
 }
 
@@ -207,24 +209,24 @@ function graph_data() {
     mon_data = {}
     mon_data['months'] = []
     mon_data['pokemon'] = {}
-    for(mon_ind in mon_list){
+    for (mon_ind in mon_list) {
         mon_name = mon_list[mon_ind]
         console.log("Initializing Mon:" + mon_name)
         mon_data['pokemon'][mon_name] = {}
         mon_data['pokemon'][mon_name]['usage'] = {}
         mon_data['pokemon'][mon_name]['rank'] = {}
     }
-    for(month in usage_data) {
+    for (month in usage_data) {
         console.log("Checking Month: " + month)
         mon_data['months'].push(month)
-        for(mon_ind in mon_list){
+        for (mon_ind in mon_list) {
             mon_name = mon_list[mon_ind]
-            if(usage_data[month].hasOwnProperty(mon_name)){
+            if (usage_data[month].hasOwnProperty(mon_name)) {
                 mon_data['pokemon'][mon_name]['usage'][month] = parseFloat(usage_data[month][mon_name]['usage'])
                 mon_data['pokemon'][mon_name]['rank'][month] = parseInt(usage_data[month][mon_name]['rank'])
             } else {
                 mon_data['pokemon'][mon_name]['usage'][month] = null
-                mon_data['pokemon'][mon_name]['rank'][month] = -1
+                mon_data['pokemon'][mon_name]['rank'][month] = null
             }
         }
     }
@@ -234,28 +236,28 @@ function graph_data() {
 function display_graph(mon_data) {
     //Graphs go here!!!
     $("#datadiv").html("<canvas id=\"myChart\"></canvas>")
-    title_str = gl_gen + " " + gl_tier + "-" + gl_level + " Usage% for "    
-    
+    title_str = gl_gen + " " + gl_tier + "-" + gl_level + " Usage% for "
+
     chart_data = {}
     chart_data['labels'] = mon_data['months'].sort()
     chart_data['datasets'] = []
 
-    for(pokemon_name in mon_data['pokemon']){
+    for (pokemon_name in mon_data['pokemon']) {
         title_str += pokemon_name + ", "
         dataset = {}
         dataset['label'] = pokemon_name
         dataset['data'] = []
         dataset['borderColor'] = color_wheel[chart_data['datasets'].length]
-        for(month_key in mon_data['months']){
+        for (month_key in mon_data['months']) {
             month_name = mon_data['months'][month_key]
             dataset['data'].push(mon_data['pokemon'][pokemon_name]['usage'][month_name])
         }
 
         chart_data['datasets'].push(dataset)
-    //    console.log(mon_data['pokemon'][pokemon_name]['usage'])
+        //    console.log(mon_data['pokemon'][pokemon_name]['usage'])
     }
-    title_str = title_str.slice(0, -2) + " from " + chart_data['labels'][0] + " to " + chart_data['labels'][chart_data['labels'].length-1]
-    
+    title_str = title_str.slice(0, -2) + " from " + chart_data['labels'][0] + " to " + chart_data['labels'][chart_data['labels'].length - 1]
+
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -265,12 +267,12 @@ function display_graph(mon_data) {
         'options': {
             'fill': false,
             //Display legend on the right
-            'legend' : {
+            'legend': {
                 'display': true,
                 'position': 'right',
             },
             //Display the Title
-            'title' : {
+            'title': {
                 'text': title_str,
                 'display': true
             }
@@ -282,6 +284,6 @@ function unshow() {
     $('#specifications').removeClass("show");
 }
 
-function refresh_graph(){
+function refresh_graph() {
     $("#datadiv").html("[graph goes here]")
 }
