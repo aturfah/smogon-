@@ -21,6 +21,7 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
     elif gen == "gen6":
         return file_in_month(month_url, "", tier, level, alpha_flag, suspect_flag)
     else:
+        print("Filename not found: ", filename)
         return None
 
 def parse_data(file_url):
