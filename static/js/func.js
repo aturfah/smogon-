@@ -55,8 +55,8 @@ color_wheel = [
 
 $(document).ready(function () {
     load_months()
-}
-)
+})
+
 function load_months() {
     start_html_str = "<option>(From Start)</option>"
     end_html_str = "<option>(To End)</option>"
@@ -67,6 +67,7 @@ function load_months() {
     $("#sel_start_month").html(start_html_str)
     $("#sel_end_month").html(end_html_str)
 }
+
 function load_list() {
     html_str = ""
     for (var i = 1; i < 4; ++i) {
@@ -83,6 +84,7 @@ function load_list() {
         <div class=\"btn btn-primary submit-button\" onclick=\"graph_data()\">Graph</div>"
     $("#pokemon_select").html(html_str)
 }
+
 function get_data() {
     usage_data = {}
     pokemon_set.clear()
