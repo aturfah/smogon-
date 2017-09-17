@@ -1,3 +1,4 @@
+""" Runner/main file for the Visualizer """
 import os
 
 from flask import Flask, render_template, request, jsonify
@@ -35,8 +36,6 @@ def get_data():
             print("Filename not found")
 
     return jsonify(pokemon_data)
-
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
