@@ -172,7 +172,6 @@ function get_data() {
 }
 
 function graph_data() {
-    console.log("Now we graph")
     pokemon_1 = document.getElementById("mon_list_1").value
     pokemon_2 = document.getElementById("mon_list_2").value
     pokemon_3 = document.getElementById("mon_list_3").value
