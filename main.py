@@ -64,7 +64,7 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
 def parse_data(file_url):
     file_data = {}
     txt_data = urlopen(file_url).read().decode()
-    
+
     data_arr = txt_data.split("\n")
     #Remove the header rows/not relevant rows
     to_delete = [0, 1]
