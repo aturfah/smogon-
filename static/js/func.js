@@ -183,19 +183,13 @@ function graph_data() {
     }
 
     mon_list = []
-    if (!pokemon_set.has(pokemon_1)) {
-        console.log("Ignoring Pokemon #1 (" + pokemon_1 + ")")
-    } else {
+    if (pokemon_set.has(pokemon_1)) {
         mon_list.push(pokemon_1)
     }
-    if (!pokemon_set.has(pokemon_2)) {
-        console.log("Ignoring Pokemon #2 (" + pokemon_2 + ")")
-    } else {
+    if (pokemon_set.has(pokemon_2)) {
         mon_list.push(pokemon_2)
     }
-    if (!pokemon_set.has(pokemon_3)) {
-        console.log("Ignoring Pokemon #3 (" + pokemon_3 + ")")
-    } else {
+    if (pokemon_set.has(pokemon_3)) {
         mon_list.push(pokemon_3)
     }
 
