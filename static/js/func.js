@@ -211,13 +211,11 @@ function graph_data() {
     mon_data['pokemon'] = {}
     for (mon_ind in mon_list) {
         mon_name = mon_list[mon_ind]
-        console.log("Initializing Mon:" + mon_name)
         mon_data['pokemon'][mon_name] = {}
         mon_data['pokemon'][mon_name]['usage'] = {}
         mon_data['pokemon'][mon_name]['rank'] = {}
     }
     for (month in usage_data) {
-        console.log("Checking Month: " + month)
         mon_data['months'].push(month)
         for (mon_ind in mon_list) {
             mon_name = mon_list[mon_ind]
