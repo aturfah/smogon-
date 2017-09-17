@@ -226,7 +226,7 @@ function graph_data() {
                 mon_data['pokemon'][mon_name]['rank'][month] = parseInt(usage_data[month][mon_name]['rank'])
             } else {
                 mon_data['pokemon'][mon_name]['usage'][month] = null
-                mon_data['pokemon'][mon_name]['rank'][month] = -1
+                mon_data['pokemon'][mon_name]['rank'][month] = null
             }
         }
     }
