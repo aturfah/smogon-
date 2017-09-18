@@ -253,7 +253,7 @@ function display_graph(mon_data) {
     chart_data['datasets'] = []
 
     for (pokemon_name in mon_data['pokemon']) {
-        $("#movesetbuttons").append("<div class=\"moveset_button btn btn-primary submit-button\" onclick=\"graph_moveset_data(\"" + pokemon_name +"\")\">" + pokemon_name + " Moveset</div>")
+        $("#movesetbuttons").append("<div class=\"moveset_button btn btn-primary submit-button\" onclick=\"graph_moveset_data(\'"+pokemon_name+"\')\">" + pokemon_name + " Moveset</div>")
         title_str += pokemon_name + ", "
         dataset = {}
         dataset['label'] = pokemon_name
@@ -265,7 +265,7 @@ function display_graph(mon_data) {
         }
         chart_data['datasets'].push(dataset)
     }
-    $("#movesetdiv").append("<div id=\"moveset-graph\">[moveset data goes here]</div> ")
+    $("#movesetdiv").append("<div id=\"movesetgraph\">[moveset data goes here]</div> ")
     title_str = title_str.slice(0, -2) + " from " + chart_data['labels'][0] + " to " + chart_data['labels'][chart_data['labels'].length - 1]
 
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -290,9 +290,9 @@ function display_graph(mon_data) {
     });
 }
 
-function graph_moveset_graph(pokemon_name) {
+function graph_moveset_data(pokemon_name) {
     console.log(pokemon_name)
-    $("#datadiv").html("<canvas id=\"movesetGraph\"></canvas>")
+    $("#movesetgraph").html("<canvas id=\"movesetGraph\"></canvas>")
 }
 
 function unshow() {
