@@ -58,7 +58,7 @@ def parse_moveset_data(file_url):
         moves_arr = moves.split("\n")
         for move_ in moves_arr:
             move = move_.strip()
-            if move == "Moves" or move == "":
+            if move == "Moves" or move == "" or "Other" in move:
                 continue
             elif "Teammates" in move:
                 break
