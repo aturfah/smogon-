@@ -183,9 +183,9 @@ function get_moveset_data(request_data) {
         'data': request_data,
         'dataType': "json",
         'success': function (data) {
-            //console.log("Moveset:")
+            console.log("Moveset:")
             moveset_data = data
-            //console.log(moveset_data)
+            console.log(moveset_data)
         }
     });
 }
@@ -293,6 +293,73 @@ function display_graph(mon_data) {
 function graph_moveset_data(pokemon_name) {
     console.log(pokemon_name)
     $("#movesetgraph").html("<canvas id=\"movesetGraph\"></canvas>")
+    title_str = gl_gen + " " + gl_tier + "-" + gl_level + " move usage% for " + pokemon_name
+
+    chart_data = {}
+    chart_data['datasets'] = []
+
+    months_arr = []
+    move_list = new Set()
+    for(month in moveset_data){
+        months_arr.push(month)
+    }
+    chart_data['labels'] = months_arr.sort()
+    move_graph_data = {}
+    for(i = 0; i < months_arr.length; ++i){
+        month = months_arr[i]
+        console.log("Month: " + month)
+        move_data = moveset_data[month][pokemon_name]
+
+        for(move_name in move_data){
+            if(!move_list.has(move_name)){
+                move_list.add(move_name)
+                //console.log("Initializing new move: " + move_name)
+                //Move has not yet been encountered, initialize a new element
+                move_graph_data[move_name] = []
+                for(j = 0; j < i; ++j){
+                    move_graph_data[move_name].push(null)
+                }
+            }
+        }
+
+        move_list.forEach( function(value) {
+            //console.log("Checking data for: " + value)
+            if(!move_data.hasOwnProperty(value)){
+                //console.log("Move not found in month: " + value)
+                move_graph_data[value].push(null)
+            } else {
+                move_graph_data[value].push(move_data[value])
+            }
+        });
+    }
+
+    for(move in move_graph_data){
+        dataset = {}
+        dataset['label'] = move
+        dataset['data'] = move_graph_data[move]
+        chart_data['datasets'].push(dataset)
+    }
+
+    var ctx = document.getElementById('movesetGraph').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        'type': 'line',
+        'data': chart_data,
+        // Configuration options go here
+        'options': {
+            'fill': false,
+            //Display legend on the right
+            'legend': {
+                'display': true,
+                'position': 'bottom',
+            },
+            //Display the Title
+            'title': {
+                'text': title_str,
+                'display': true
+            }
+        }
+    });
 }
 
 function unshow() {
