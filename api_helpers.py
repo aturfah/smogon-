@@ -28,30 +28,41 @@ def parse_moveset_data(file_url):
     file_data = {}
     txt_data = urlopen(file_url).read().decode()
 
-    pct_regex = "[0-9]{2,3}\.[0-9]+?%"
+    pct_regex = "[0-9]{1,3}\.[0-9]+?%"
     split_str = " +----------------------------------------+ \n"
 
     data_arr = txt_data.split(split_str + split_str)
 
     for datum in data_arr:
-        datum_arr = datum.split(split_str)[1:]
+        datum_arr = datum.split(split_str)
 
         #Process the name
         name = datum_arr[0]
         name = name.replace("|", "").strip()
         file_data[name] = {}
-
         #Process the moves
-        moves = datum_arr[5]
+        moves = None
+        for section in datum_arr:
+            #Find the moves section
+            if "Moves" in section:
+                moves = section
+                break
+        if moves is None:
+            #No moves data found
+            continue
+
         moves = moves.replace("|", "")
         moves_arr = moves.split("\n")
         for move_ in moves_arr:
             move = move_.strip()
             if move == "Moves" or move == "":
                 continue
+            elif "Teammates" in move:
+                break
             pct_val = findall(pct_regex, move)[0]
             move = move.replace(pct_val, "").strip()
             pct_val = float(pct_val.replace("%", ""))
+            #print("\t{} {}".format(move, pct_val))
             file_data[name][move] = pct_val
 
     return file_data
