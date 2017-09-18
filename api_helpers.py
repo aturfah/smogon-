@@ -1,5 +1,5 @@
 from urllib.request import urlopen 
-from re import sub
+from re import sub, findall
 
 def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
     raw_html = urlopen(month_url).read().decode()
@@ -25,7 +25,36 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
         return None
 
 def parse_moveset_data(file_url):
-    return
+    file_data = {}
+    txt_data = urlopen(file_url).read().decode()
+    
+    pct_regex = "[0-9]{2,3}\.[0-9]+?%"
+    split_str = " +----------------------------------------+ \n"
+
+    data_arr = txt_data.split(split_str + split_str)
+
+    for datum in data_arr:
+        datum_arr = datum.split(split_str)[1:]
+
+        #Process the name
+        name = datum_arr[0]
+        name = name.replace("|", "").strip()
+        file_data[name] = {}
+
+        #Process the moves
+        moves = datum_arr[5]
+        moves = moves.replace("|", "")
+        moves_arr = moves.split("\n")
+        for move_ in moves_arr:
+            move = move_.strip()
+            if move == "Moves" or move == "":
+                continue
+            pct_val = findall(pct_regex, move)[0]
+            move = move.replace(pct_val, "").strip()
+            pct_val = float(pct_val.replace("%",""))
+            file_data[name][move] = pct_val
+
+    return file_data
 
 def parse_data(file_url):
     file_data = {}
