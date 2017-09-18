@@ -24,6 +24,9 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
         print("Filename not found: ", filename)
         return None
 
+def parse_moveset_data(file_url):
+    return
+
 def parse_data(file_url):
     file_data = {}
     txt_data = urlopen(file_url).read().decode()
