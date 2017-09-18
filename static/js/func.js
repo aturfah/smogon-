@@ -183,8 +183,9 @@ function get_moveset_data(request_data) {
         'data': request_data,
         'dataType': "json",
         'success': function (data) {
-            console.log(moveset_data)
+            //console.log("Moveset:")
             moveset_data = data
+            //console.log(moveset_data)
         }
     });
 }
@@ -244,7 +245,7 @@ function graph_data() {
 
 function display_graph(mon_data) {
     //Graphs go here!!!
-    $("#datadiv").html("<canvas id=\"myChart\"></canvas><div id=\"movesetdiv\"></div>")
+    $("#datadiv").html("<canvas id=\"myChart\"></canvas><div id=\"movesetdiv\"><div id=\"movesetbuttons\" class=\"row\"></div></div>")
     title_str = gl_gen + " " + gl_tier + "-" + gl_level + " Usage% for "
 
     chart_data = {}
@@ -252,6 +253,7 @@ function display_graph(mon_data) {
     chart_data['datasets'] = []
 
     for (pokemon_name in mon_data['pokemon']) {
+        $("#movesetbuttons").append("<div class=\"moveset_button btn btn-primary submit-button\" onclick=\"graph_moveset_data(\"" + pokemon_name +"\")\">" + pokemon_name + " Moveset</div>")
         title_str += pokemon_name + ", "
         dataset = {}
         dataset['label'] = pokemon_name
@@ -261,9 +263,9 @@ function display_graph(mon_data) {
             month_name = mon_data['months'][month_key]
             dataset['data'].push(mon_data['pokemon'][pokemon_name]['usage'][month_name])
         }
-
         chart_data['datasets'].push(dataset)
     }
+    $("#movesetdiv").append("<div id=\"moveset-graph\">[moveset data goes here]</div> ")
     title_str = title_str.slice(0, -2) + " from " + chart_data['labels'][0] + " to " + chart_data['labels'][chart_data['labels'].length - 1]
 
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -286,6 +288,11 @@ function display_graph(mon_data) {
             }
         }
     });
+}
+
+function graph_moveset_graph(pokemon_name) {
+    console.log(pokemon_name)
+    $("#datadiv").html("<canvas id=\"movesetGraph\"></canvas>")
 }
 
 function unshow() {
