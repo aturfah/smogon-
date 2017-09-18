@@ -68,6 +68,10 @@ function load_months() {
     $("#sel_end_month").html(end_html_str)
 }
 
+function add_option(){
+
+}
+
 function load_list() {
     html_str = ""
     for (var i = 1; i < 4; ++i) {
@@ -172,29 +176,40 @@ function get_data() {
 }
 
 function graph_data() {
-    pokemon_1 = document.getElementById("mon_list_1").value
-    pokemon_2 = document.getElementById("mon_list_2").value
-    pokemon_3 = document.getElementById("mon_list_3").value
+    mon_list = []
+    input_set = new Set()
+    counter = 1
+    pokemon_i = ""
+    while(pokemon_i != null){
+        pokemon_i = document.getElementById("mon_list_" + counter)
+        
+        if(pokemon_i == null){break}
+        pokemon_i = pokemon_i.value
+        counter += 1
+        input_set.add(pokemon_i)
+    }
 
-    if (pokemon_1 == "" && pokemon_2 == "" && pokemon_3 == "") {
+    contains_value = false
+    input_set.forEach(function(value){
+        if(value != ""){
+            contains_value = true;
+        }
+    });
+
+    if (!contains_value) {
         alert("You must select at least one pokemon");
         return
     }
 
-    mon_list = []
-    if (pokemon_set.has(pokemon_1)) {
-        mon_list.push(pokemon_1)
-    }
-    if (pokemon_set.has(pokemon_2)) {
-        mon_list.push(pokemon_2)
-    }
-    if (pokemon_set.has(pokemon_3)) {
-        mon_list.push(pokemon_3)
-    }
+    input_set.forEach(function(value){
+        if (pokemon_set.has(value)) {
+            mon_list.push(value)
+        }
+    });
 
     if (mon_list.length == 0) {
         alert("No pokemon provided matches the list.\n\
-            Make sure to use the exact spelling from the dropdown.");
+        Make sure to use the exact spelling from the dropdown.");
         return
     }
 
