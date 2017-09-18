@@ -56,7 +56,7 @@ def get_moveset_data():
 
         file_name = file_in_month(month_dir, gen, tier, level, alpha_flag, suspect_flag)
         if file_name is not None:
-            file_url = month_dir + filename + ".txt"
+            file_url = month_dir + file_name + ".txt"
             print("\t{}".format(file_url))
             moveset_data[month_name] = parse_moveset_data(file_url)
 
