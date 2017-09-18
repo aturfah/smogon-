@@ -151,7 +151,12 @@ function get_data() {
         'alpha_flag': alpha_beta,
         'suspect_flag': suspect
     }
+    get_usage_data(request_data)
 
+    return;
+}
+
+function get_usage_data(request_data){
     $.ajax({
         'type': "POST",
         'url': "/api/get_data/",
@@ -167,8 +172,6 @@ function get_data() {
             load_list()
         }
     });
-
-    return;
 }
 
 function graph_data() {
