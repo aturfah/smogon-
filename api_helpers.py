@@ -67,7 +67,7 @@ def parse_moveset_data(file_url):
             pct_val = float(pct_val.replace("%", ""))
             print("\t\t{} {}".format(move, pct_val))
             file_data[name][move] = pct_val
-    exit(1)
+            
     return file_data
 
 def parse_data(file_url):
