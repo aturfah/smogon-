@@ -38,7 +38,10 @@ def parse_moveset_data(file_url):
 
         #Process the name
         name = datum_arr[0]
+        if(name == ''):
+            name = datum_arr[1]
         name = name.replace("|", "").strip()
+        print("\tName: {}".format(name))
         file_data[name] = {}
         #Process the moves
         moves = None
@@ -62,9 +65,9 @@ def parse_moveset_data(file_url):
             pct_val = findall(pct_regex, move)[0]
             move = move.replace(pct_val, "").strip()
             pct_val = float(pct_val.replace("%", ""))
-            #print("\t{} {}".format(move, pct_val))
+            print("\t\t{} {}".format(move, pct_val))
             file_data[name][move] = pct_val
-
+    exit(1)
     return file_data
 
 def parse_data(file_url):
