@@ -182,8 +182,9 @@ function graph_data() {
     pokemon_i = ""
     while(pokemon_i != null){
         pokemon_i = document.getElementById("mon_list_" + counter)
-        
-        if(pokemon_i == null){break}
+        if(pokemon_i == null){
+            break
+        }
         pokemon_i = pokemon_i.value
         counter += 1
         input_set.add(pokemon_i)
@@ -212,7 +213,6 @@ function graph_data() {
         Make sure to use the exact spelling from the dropdown.");
         return
     }
-
 
     mon_data = {}
     mon_data['months'] = []
