@@ -92,7 +92,7 @@ function get_data() {
     $('#pokemon_select').collapse({
         toggle: true
     });
-    $("#pokemon_select").html("<img src=\"http://alvarodias.org/images/articles/LoadingIndicators-hourglass.gif\" style=\"width:40px;margin:auto;display:block;\" alt=\"Loading...\"/>")
+    $("#pokemon_select").html("<img src=\"/static/hourglass.gif\" style=\"width:40px;margin:auto;display:block;\" alt=\"Loading...\"/>")
 
     var base_url = "http://www.smogon.com/stats/"
     var gen = document.getElementById("sel_gen").value.toLowerCase();
