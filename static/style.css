@@ -42,3 +42,13 @@ h1 {
 .mon_list {
     margin-top: 15px;
 }
+
+#movesetdiv, #movesetbuttons {
+    padding: 10px;
+}
+
+.moveset_button {
+    max-width: 35%;
+    min-width: 25%;
+    margin-right: 10px;
+}

@@ -44,6 +44,7 @@ gl_tier = ""
 gl_level = ""
 
 usage_data = {}
+moveset_data = {}
 pokemon_set = new Set()
 
 color_wheel = [
@@ -92,7 +93,7 @@ function get_data() {
     $('#pokemon_select').collapse({
         toggle: true
     });
-    $("#pokemon_select").html("<img src=\"http://alvarodias.org/images/articles/LoadingIndicators-hourglass.gif\" style=\"width:40px;margin:auto;display:block;\" alt=\"Loading...\"/>")
+    $("#pokemon_select").html("<img src=\"/static/hourglass.gif\" style=\"width:40px;margin:auto;display:block;\" alt=\"Loading...\"/>")
 
     var base_url = "http://www.smogon.com/stats/"
     var gen = document.getElementById("sel_gen").value.toLowerCase();
@@ -151,7 +152,13 @@ function get_data() {
         'alpha_flag': alpha_beta,
         'suspect_flag': suspect
     }
+    
+    get_moveset_data(request_data)
+    get_usage_data(request_data)
+    return;
+}
 
+function get_usage_data(request_data){
     $.ajax({
         'type': "POST",
         'url': "/api/get_data/",
@@ -167,8 +174,20 @@ function get_data() {
             load_list()
         }
     });
+}
 
-    return;
+function get_moveset_data(request_data) {
+    $.ajax({
+        'type': "POST",
+        'url': "/api/get_moveset_data/",
+        'data': request_data,
+        'dataType': "json",
+        'success': function (data) {
+            console.log("Moveset:")
+            moveset_data = data
+            console.log(moveset_data)
+        }
+    });
 }
 
 function graph_data() {
@@ -226,7 +245,7 @@ function graph_data() {
 
 function display_graph(mon_data) {
     //Graphs go here!!!
-    $("#datadiv").html("<canvas id=\"myChart\"></canvas>")
+    $("#datadiv").html("<canvas id=\"myChart\"></canvas><div id=\"movesetdiv\"><div id=\"movesetbuttons\" class=\"row\"></div></div>")
     title_str = gl_gen + " " + gl_tier + "-" + gl_level + " Usage% for "
 
     chart_data = {}
@@ -234,6 +253,7 @@ function display_graph(mon_data) {
     chart_data['datasets'] = []
 
     for (pokemon_name in mon_data['pokemon']) {
+        $("#movesetbuttons").append("<div class=\"moveset_button btn btn-primary submit-button\" onclick=\"graph_moveset_data(\'"+pokemon_name+"\')\">" + pokemon_name + " Moveset</div>")
         title_str += pokemon_name + ", "
         dataset = {}
         dataset['label'] = pokemon_name
@@ -243,9 +263,9 @@ function display_graph(mon_data) {
             month_name = mon_data['months'][month_key]
             dataset['data'].push(mon_data['pokemon'][pokemon_name]['usage'][month_name])
         }
-
         chart_data['datasets'].push(dataset)
     }
+    $("#movesetdiv").append("<div id=\"movesetgraph\">[moveset data goes here]</div> ")
     title_str = title_str.slice(0, -2) + " from " + chart_data['labels'][0] + " to " + chart_data['labels'][chart_data['labels'].length - 1]
 
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -260,6 +280,78 @@ function display_graph(mon_data) {
             'legend': {
                 'display': true,
                 'position': 'right',
+            },
+            //Display the Title
+            'title': {
+                'text': title_str,
+                'display': true
+            }
+        }
+    });
+}
+
+function graph_moveset_data(pokemon_name) {
+    console.log(pokemon_name)
+    $("#movesetgraph").html("<canvas id=\"movesetGraph\"></canvas>")
+    title_str = gl_gen + " " + gl_tier + "-" + gl_level + " move usage% for " + pokemon_name
+
+    chart_data = {}
+    chart_data['datasets'] = []
+
+    months_arr = []
+    move_list = new Set()
+    for(month in moveset_data){
+        months_arr.push(month)
+    }
+    chart_data['labels'] = months_arr.sort()
+    move_graph_data = {}
+    for(i = 0; i < months_arr.length; ++i){
+        month = months_arr[i]
+        console.log("Month: " + month)
+        move_data = moveset_data[month][pokemon_name]
+
+        for(move_name in move_data){
+            if(!move_list.has(move_name)){
+                move_list.add(move_name)
+                //console.log("Initializing new move: " + move_name)
+                //Move has not yet been encountered, initialize a new element
+                move_graph_data[move_name] = []
+                for(j = 0; j < i; ++j){
+                    move_graph_data[move_name].push(null)
+                }
+            }
+        }
+
+        move_list.forEach( function(value) {
+            //console.log("Checking data for: " + value)
+            if(!move_data.hasOwnProperty(value)){
+                //console.log("Move not found in month: " + value)
+                move_graph_data[value].push(null)
+            } else {
+                move_graph_data[value].push(move_data[value])
+            }
+        });
+    }
+
+    for(move in move_graph_data){
+        dataset = {}
+        dataset['label'] = move
+        dataset['data'] = move_graph_data[move]
+        chart_data['datasets'].push(dataset)
+    }
+
+    var ctx = document.getElementById('movesetGraph').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        'type': 'line',
+        'data': chart_data,
+        // Configuration options go here
+        'options': {
+            'fill': false,
+            //Display legend on the right
+            'legend': {
+                'display': true,
+                'position': 'bottom',
             },
             //Display the Title
             'title': {

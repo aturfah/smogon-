@@ -1,5 +1,5 @@
 from urllib.request import urlopen 
-from re import sub
+from re import sub, findall
 
 def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
     raw_html = urlopen(month_url).read().decode()
@@ -23,6 +23,52 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
     else:
         print("Filename not found: ", filename)
         return None
+
+def parse_moveset_data(file_url):
+    file_data = {}
+    txt_data = urlopen(file_url).read().decode()
+
+    pct_regex = "[0-9]{1,3}\.[0-9]+?%"
+    split_str = " +----------------------------------------+ \n"
+
+    data_arr = txt_data.split(split_str + split_str)
+
+    for datum in data_arr:
+        datum_arr = datum.split(split_str)
+
+        #Process the name
+        name = datum_arr[0]
+        if name == '':
+            name = datum_arr[1]
+        name = name.replace("|", "").strip()
+        #print("\tName: {}".format(name))
+        file_data[name] = {}
+        #Process the moves
+        moves = None
+        for section in datum_arr:
+            #Find the moves section
+            if "Moves" in section:
+                moves = section
+                break
+        if moves is None:
+            #No moves data found
+            continue
+
+        moves = moves.replace("|", "")
+        moves_arr = moves.split("\n")
+        for move_ in moves_arr:
+            move = move_.strip()
+            if move == "Moves" or move == "" or "Other" in move or "Nothing" in move:
+                continue
+            elif "Teammates" in move:
+                break
+            pct_val = findall(pct_regex, move)[0]
+            move = move.replace(pct_val, "").strip()
+            pct_val = float(pct_val.replace("%", ""))
+            #print("\t\t{} {}".format(move, pct_val))
+            file_data[name][move] = pct_val
+
+    return file_data
 
 def parse_data(file_url):
     file_data = {}
