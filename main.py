@@ -35,6 +35,20 @@ def get_data():
         
     return jsonify(pokemon_data)
 
+@app.route('/api/get_moveset_data/', methods=['POST'])
+def get_moveset_data():
+    req_dict = dict(request.form)
+    month_list = req_dict.get("month_list[]")
+    alpha_flag = req_dict.get("alpha_flag")[0] == 'true'
+    suspect_flag = req_dict.get("suspect_flag")[0] == 'true'
+    gen = req_dict.get("gen")[0]
+    tier = req_dict.get("tier")[0]
+    level = req_dict.get("level")[0]
+
+    moveset_data = {}
+
+    return jsonify(moveset_data)
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
