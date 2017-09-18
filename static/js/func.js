@@ -183,6 +183,7 @@ function get_moveset_data(request_data) {
         'data': request_data,
         'dataType': "json",
         'success': function (data) {
+            console.log(moveset_data)
             moveset_data = data
         }
     });
@@ -243,7 +244,7 @@ function graph_data() {
 
 function display_graph(mon_data) {
     //Graphs go here!!!
-    $("#datadiv").html("<canvas id=\"myChart\"></canvas>")
+    $("#datadiv").html("<canvas id=\"myChart\"></canvas><div id=\"movesetdiv\"></div>")
     title_str = gl_gen + " " + gl_tier + "-" + gl_level + " Usage% for "
 
     chart_data = {}
