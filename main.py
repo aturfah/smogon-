@@ -37,6 +37,7 @@ def get_data():
 
 @app.route('/api/get_moveset_data/', methods=['POST'])
 def get_moveset_data():
+    print("Getting moveset data")
     req_dict = dict(request.form)
     month_list = req_dict.get("month_list[]")
     alpha_flag = req_dict.get("alpha_flag")[0] == 'true'
@@ -46,6 +47,18 @@ def get_moveset_data():
     level = req_dict.get("level")[0]
 
     moveset_data = {}
+    
+    for month_url in month_list:
+        #Get Month name and the moveset info directory
+        month_name = month_url.replace("http://www.smogon.com/stats/", "")
+        month_dir = month_url + "/moveset/"
+        moveset_data[month_name] = {}
+
+        file_name = file_in_month(month_dir, gen, tier, level, alpha_flag, suspect_flag)
+        if file_name is not None:
+            file_url = month_dir + filename + ".txt"
+            print("\t{}".format(file_url))
+            moveset_data[month_name] = parse_moveset_data(file_url)
 
     return jsonify(moveset_data)
 
