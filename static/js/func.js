@@ -44,6 +44,7 @@ gl_tier = ""
 gl_level = ""
 
 usage_data = {}
+moveset_data = {}
 pokemon_set = new Set()
 
 color_wheel = [
@@ -151,8 +152,9 @@ function get_data() {
         'alpha_flag': alpha_beta,
         'suspect_flag': suspect
     }
+    
+    get_moveset_data(request_data)
     get_usage_data(request_data)
-
     return;
 }
 
@@ -170,6 +172,18 @@ function get_usage_data(request_data){
                 }
             }
             load_list()
+        }
+    });
+}
+
+function get_moveset_data(request_data) {
+    $.ajax({
+        'type': "POST",
+        'url': "/api/get_moveset_data/",
+        'data': request_data,
+        'dataType': "json",
+        'success': function (data) {
+            moveset_data = data
         }
     });
 }
