@@ -19,7 +19,7 @@ def get_data():
     gen = req_dict.get("gen")[0]
     tier = req_dict.get("tier")[0]
     level = req_dict.get("level")[0]
-    usage_threshold = float(req_dict.get("usage_thresh"))
+    usage_threshold = float(req_dict.get("usage_thresh")[0])
     pokemon_data = {}
 
     for ind in range(len(month_list)):
@@ -44,7 +44,7 @@ def get_moveset_data():
     gen = req_dict.get("gen")[0]
     tier = req_dict.get("tier")[0]
     level = req_dict.get("level")[0]
-    moves_threshold = float(req_dict.get("moves_thresh"))
+    moves_threshold = float(req_dict.get("moves_thresh")[0])
 
     moveset_data = {}
 
