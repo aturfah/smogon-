@@ -118,8 +118,6 @@ function get_data() {
         }
     }
 
-    console.log("Usage thresh: " + usage_threshold)
-    console.log("Move thresh: " + moves_threshold)
     var alpha_beta = !$('#alpha_checkbox').is(":checked");
     var suspect = !$('#suspect_checkbox').is(":checked");
 
@@ -171,7 +169,9 @@ function get_data() {
         "level": level,
         'month_list': month_url_list,
         'alpha_flag': alpha_beta,
-        'suspect_flag': suspect
+        'suspect_flag': suspect,
+        'moveset_thresh': moves_threshold,
+        'usage_thresh': usage_threshold
     }
     
     get_moveset_data(request_data)
