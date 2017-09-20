@@ -48,7 +48,8 @@ h1 {
 }
 
 .thresholdfield {
-    padding-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     display: block;
 }
 
@@ -56,4 +57,9 @@ h1 {
     max-width: 35%;
     min-width: 25%;
     margin-right: 10px;
+}
+
+.filters-div {
+    padding: 0;
+    padding-left: 10px;
 }
