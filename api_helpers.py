@@ -65,7 +65,8 @@ def parse_moveset_data(file_url, moves_threshold):
             pct_val = findall(pct_regex, move)[0]
             move = move.replace(pct_val, "").strip()
             pct_val = float(pct_val.replace("%", ""))
-            if(pct_val < moves_threshold):
+            #Threshold the values
+            if pct_val < moves_threshold:
                 continue
 
             #print("\t\t{} {}".format(move, pct_val))
@@ -102,7 +103,8 @@ def parse_data(file_url, usage_threshold):
         name = datum_arr[1]
         usage_pcnt = datum_arr[2]
         usage_count = datum_arr[3]
-        if usage_pcnt < usage_threshold:
+        #Threshold the values
+        if float(usage_pcnt[:-1]) < usage_threshold:
             continue
 
         file_data[name] = {}
