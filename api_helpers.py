@@ -111,5 +111,5 @@ def parse_data(file_url, usage_threshold):
         file_data[name]["rank"] = rank
         file_data[name]["usage"] = usage_pcnt
         file_data[name]['count'] = usage_count
-    
+
     return file_data
