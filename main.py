@@ -19,7 +19,7 @@ def get_data():
     gen = req_dict.get("gen")[0]
     tier = req_dict.get("tier")[0]
     level = req_dict.get("level")[0]
-
+    usage_threshold = float(req_dict.get("usage_thresh"))
     pokemon_data = {}
 
     for ind in range(len(month_list)):
@@ -31,7 +31,7 @@ def get_data():
         if file_name is not None:
             file_url = month_url + "/" + file_name + ".txt"
             print(file_url)
-            pokemon_data[month_name] = parse_data(file_url)
+            pokemon_data[month_name] = parse_data(file_url, usage_threshold)
 
     return jsonify(pokemon_data)
 
@@ -44,6 +44,7 @@ def get_moveset_data():
     gen = req_dict.get("gen")[0]
     tier = req_dict.get("tier")[0]
     level = req_dict.get("level")[0]
+    moves_threshold = float(req_dict.get("moves_thresh"))
 
     moveset_data = {}
     
@@ -57,7 +58,7 @@ def get_moveset_data():
         if file_name is not None:
             file_url = month_dir + file_name + ".txt"
             print("Getting moveset data: {}".format(file_url))
-            moveset_data[month_name] = parse_moveset_data(file_url)
+            moveset_data[month_name] = parse_moveset_data(file_url, moves_threshold)
     
     return jsonify(moveset_data)
 
