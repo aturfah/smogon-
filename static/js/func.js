@@ -99,6 +99,27 @@ function get_data() {
     var gen = document.getElementById("sel_gen").value.toLowerCase();
     var tier = document.getElementById("sel_tier").value.toLowerCase();
     var level = document.getElementById("sel_level").value.toLowerCase();
+    var usage_threshold = document.getElementById("pokemon_usage_threshold").value;
+    if(usage_threshold == ''){
+        usage_threshold = 0
+    } else {
+        usage_threshold = parseFloat(usage_threshold)
+        if(usage_threshold > 100){
+            usage_threshold = 100
+        }
+    }
+    var moves_threshold = document.getElementById("move_usage_threshold").value;
+    if(moves_threshold == ''){
+        moves_threshold = 0
+    } else {
+        moves_threshold = parseFloat(moves_threshold)
+        if(moves_threshold > 100){
+            moves_threshold = 100
+        }
+    }
+
+    console.log("Usage thresh: " + usage_threshold)
+    console.log("Move thresh: " + moves_threshold)
     var alpha_beta = !$('#alpha_checkbox').is(":checked");
     var suspect = !$('#suspect_checkbox').is(":checked");
 
