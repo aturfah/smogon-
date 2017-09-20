@@ -47,7 +47,7 @@ def get_moveset_data():
     moves_threshold = float(req_dict.get("moves_thresh"))
 
     moveset_data = {}
-    
+
     for month_url in month_list:
         #Get Month name and the moveset info directory
         month_name = month_url.replace("http://www.smogon.com/stats/", "")
@@ -59,7 +59,7 @@ def get_moveset_data():
             file_url = month_dir + file_name + ".txt"
             print("Getting moveset data: {}".format(file_url))
             moveset_data[month_name] = parse_moveset_data(file_url, moves_threshold)
-    
+
     return jsonify(moveset_data)
 
 if __name__ == "__main__":
