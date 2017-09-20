@@ -47,6 +47,11 @@ h1 {
     padding: 10px;
 }
 
+.thresholdfield {
+    padding-top: 10px;
+    display: block;
+}
+
 .moveset_button {
     max-width: 35%;
     min-width: 25%;
