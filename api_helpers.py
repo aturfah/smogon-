@@ -24,7 +24,7 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
         print("Filename not found: ", filename)
         return None
 
-def parse_moveset_data(file_url):
+def parse_moveset_data(file_url, moves_threshold):
     file_data = {}
     txt_data = urlopen(file_url).read().decode()
 
@@ -65,12 +65,15 @@ def parse_moveset_data(file_url):
             pct_val = findall(pct_regex, move)[0]
             move = move.replace(pct_val, "").strip()
             pct_val = float(pct_val.replace("%", ""))
+            if(pct_val < moves_threshold):
+                continue
+
             #print("\t\t{} {}".format(move, pct_val))
             file_data[name][move] = pct_val
 
     return file_data
 
-def parse_data(file_url):
+def parse_data(file_url, usage_threshold):
     file_data = {}
     txt_data = urlopen(file_url).read().decode()
 
@@ -99,6 +102,9 @@ def parse_data(file_url):
         name = datum_arr[1]
         usage_pcnt = datum_arr[2]
         usage_count = datum_arr[3]
+        if usage_pcnt < usage_threshold:
+            continue
+
         file_data[name] = {}
         file_data[name]["rank"] = rank
         file_data[name]["usage"] = usage_pcnt
