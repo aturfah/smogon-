@@ -170,7 +170,7 @@ function get_data() {
         'month_list': month_url_list,
         'alpha_flag': alpha_beta,
         'suspect_flag': suspect,
-        'moveset_thresh': moves_threshold,
+        'moves_thresh': moves_threshold,
         'usage_thresh': usage_threshold
     }
     
