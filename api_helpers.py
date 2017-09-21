@@ -5,7 +5,7 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
     raw_html = urlopen(month_url).read().decode()
 
     filename = gen + tier + "-" + level
-    filename_gen6 = tier + "-" + level
+    filename_pokebank = gen + "pokebank" + tier + "-" + level
     filename_suspect = gen + tier + "suspecttest-" + level
     filename_alpha = gen + tier + "alpha-" + level
     filename_beta = gen + tier + "beta-" + level
@@ -14,6 +14,8 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
         return filename_suspect
     elif '"' + filename in raw_html:
         return filename
+    elif '"' + filename_pokebank in raw_html:
+        return filename_pokebank
     elif alpha_flag and '"' + filename_alpha in raw_html:
         return filename_alpha
     elif alpha_flag and '"' + filename_beta in raw_html:
