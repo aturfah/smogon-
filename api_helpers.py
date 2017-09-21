@@ -98,7 +98,7 @@ def parse_data(file_url, usage_threshold):
         datum_arr = datum.split(" | ")
 
         #Remove unneeded datapoints
-        datum_arr = datum_arr[1:5] 
+        datum_arr = datum_arr[1:5]
         rank = datum_arr[0]
         name = datum_arr[1]
         usage_pcnt = datum_arr[2]
