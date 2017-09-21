@@ -12,10 +12,10 @@ def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
 
     if suspect_flag and '"' + filename_suspect in raw_html:
         return filename_suspect
-    elif '"' + filename in raw_html:
-        return filename
     elif '"' + filename_pokebank in raw_html:
         return filename_pokebank
+    elif '"' + filename in raw_html:
+        return filename
     elif alpha_flag and '"' + filename_alpha in raw_html:
         return filename_alpha
     elif alpha_flag and '"' + filename_beta in raw_html:
