@@ -35,7 +35,7 @@ def get_data():
         file_name = file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag)
         if file_name is not None:
             file_url = month_url + "/" + file_name + ".txt"
-            print(file_url)
+            print("Pulling", file_url)
             pokemon_data[month_name] = parse_data(file_url)
         
     return jsonify(pokemon_data)
