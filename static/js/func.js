@@ -155,7 +155,7 @@ function get_data() {
     $.ajax({
         'type': "POST",
         'url': "/api/get_data/",
-        'data': request_data,
+        'data': JSON.stringify(request_data),
         'dataType': "json",
         'success': function (data) {
             usage_data = data

@@ -1,5 +1,6 @@
 """ Runner/main file for the Visualizer """
 import os 
+import json
 
 from flask import Flask, render_template, request, jsonify
 from api_helpers import *
@@ -12,15 +13,19 @@ def index():
 
 @app.route('/api/get_data/', methods=['POST'])
 def get_data():
-    req_dict = dict(request.form)
-    month_list = req_dict.get("month_list[]")
-    alpha_flag = req_dict.get("alpha_flag")[0] == 'true'
-    suspect_flag = req_dict.get("suspect_flag")[0] == 'true'
-    gen = req_dict.get("gen")[0]
-    tier = req_dict.get("tier")[0]
-    level = req_dict.get("level")[0]
+    ## Hack to get this working
+    temp = dict(request.form)
+
+    req_dict = json.loads(list(temp.keys())[0])
+    month_list = req_dict.get("month_list", [])
+    alpha_flag = req_dict.get("alpha_flag")
+    suspect_flag = req_dict.get("suspect_flag")
+    gen = req_dict.get("gen")
+    tier = req_dict.get("tier")
+    level = req_dict.get("level")
 
     pokemon_data = {}
+
 
     for ind in range(len(month_list)):
         month_url = month_list[ind]

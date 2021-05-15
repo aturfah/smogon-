@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from re import sub
 
 def file_in_month(month_url, gen, tier, level, alpha_flag, suspect_flag):
+    print(month_url)
     raw_html = urlopen(month_url).read().decode()
 
     filename = gen + tier + "-" + level
