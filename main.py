@@ -1,5 +1,5 @@
 """ Runner/main file for the Visualizer """
-import os
+import os 
 
 from flask import Flask, render_template, request, jsonify
 from api_helpers import *
